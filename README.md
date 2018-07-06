@@ -7,8 +7,16 @@
 2. Mysql
 3. SpringData
 
-## Support
+## Requirement
+### Role
+```java
+1. admin //water and mike
+2. user  // all register member
+3. host //which means the host of the retrospective
+4. teamLeader //which can maintain his group member
+```
 
+## Support
 If you have any questions or any suggestions, please feel free to contact 
 
 - Mike.Xie@oocl.com
