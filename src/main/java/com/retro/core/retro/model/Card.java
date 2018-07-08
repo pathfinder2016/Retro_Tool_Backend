@@ -1,4 +1,4 @@
-package com.retro.core.retrospect.model;
+package com.retro.core.retro.model;
 
 import com.retro.common.constant.CardType;
 import com.retro.common.model.User;

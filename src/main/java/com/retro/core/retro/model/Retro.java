@@ -1,4 +1,4 @@
-package com.retro.core.retrospect.model;
+package com.retro.core.retro.model;
 
 import com.retro.common.model.User;
 import org.springframework.data.jpa.domain.AbstractAuditable;
