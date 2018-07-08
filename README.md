@@ -12,7 +12,7 @@
 ```java
 1. admin //water and mike
 2. user  // all register member
-3. host //which means the host of the retrospective
+3. host retrospect
 4. teamLeader //which can maintain his group member
 ```
 
