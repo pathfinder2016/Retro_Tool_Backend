@@ -1,4 +1,5 @@
 package com.retro.common.repository;
 
-public class BaseRepository {
+//https://docs.spring.io/spring-boot/docs/2.0.3.RELEASE/reference/htmlsingle/#howto-use-spring-data-repositories
+public interface BaseRepository {
 }

@@ -9,6 +9,16 @@
     <packaging>jar</packaging>
     <name>retro</name>
 
+    <!--Spring Boot provides a number of “Starters” that let you add jars to your classpath-->
+    <!--The parent project provides the following features:
+        1. Java 1.8 as the default compiler level.
+        2. UTF-8 source encoding.
+        3. A Dependency Management section,(lets you omit <version> tags)
+        4. Sensible resource filtering.
+        5. Sensible plugin configuration (exec plugin, Git commit ID, and shade).
+        6. Sensible resource filtering for application.properties and application.yml
+        including profile-specific files (for example, application-dev.properties and application-dev.yml)
+    -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -27,19 +37,30 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
-
+        <!--Starter for building web, including RESTful, applications using Spring MVC. Uses Tomcat as the default embedded container-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--Starter for testing Spring Boot applications with libraries including JUnit, Hamcrest and Mockito-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--Starter for using Java Mail and Spring Framework’s email sending support-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
 
         <!--https://docs.spring.io/spring-boot/docs/2.0.3.RELEASE/reference/htmlsingle/#boot-features-jpa-and-spring-data-->
+        <!--Spring and JPA for database access-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <!--MySQL JdbcTemplate-->
+        <!--Starter for using JDBC with the HikariCP connection pool-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -48,11 +69,21 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        <!--Hot Swapping: Restart, not reload.-->
+        <!--Developer tools are automatically disabled when running a fully packaged application.-->
+        <!--Applies sensible development-time configuration.-->
+        <!--Automatically restart whenever files on the classpath change-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
+                <!-- Package the project as an executable jar-->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
