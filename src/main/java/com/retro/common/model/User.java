@@ -1,24 +1,15 @@
 package com.retro.common.model;
 
+import org.springframework.data.jpa.domain.AbstractAuditable;
 import javax.persistence.*;
 
 @Entity
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+public class User extends AbstractAuditable<User, Long> {
+
     @Column(name = "DOMAIN_ID")
     private String domainId;
     @Column(name = "DISPLAY_NAME")
     private String displayName;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getDomainId() {
         return domainId;
