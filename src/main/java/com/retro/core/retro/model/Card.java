@@ -8,9 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "CARD")
-public class Card extends AbstractAuditable<User, Long> {
+@Entity @Table(name = "CARD") public class Card extends AbstractAuditable<User, Long> {
 
     @Column(name = "CONTENT")
     private String content;
@@ -18,11 +16,11 @@ public class Card extends AbstractAuditable<User, Long> {
     @Column(name = "TYPE")
     private CardType type;
 
-    @Column(name = "LIKE_NUM")
-    private Integer likeNum;
-
     @Column(name = "IS_PRIVATE")
     private Boolean isPrivate;
+
+    @Column(name = "order")
+    private Integer order;
 
     public String getContent() {
         return content;
@@ -40,19 +38,19 @@ public class Card extends AbstractAuditable<User, Long> {
         this.type = type;
     }
 
-    public Integer getLikeNum() {
-        return likeNum;
-    }
-
-    public void setLikeNum(Integer likeNum) {
-        this.likeNum = likeNum;
-    }
-
     public Boolean getPrivate() {
         return isPrivate;
     }
 
     public void setPrivate(Boolean aPrivate) {
         isPrivate = aPrivate;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 }
