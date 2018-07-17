@@ -1,13 +1,11 @@
 package com.retro.core.retro.model;
 
-import com.retro.common.constant.CardType;
 import com.retro.common.model.User;
 import org.springframework.data.jpa.domain.AbstractAuditable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Objects;
 
 @Entity @Table(name = "CARD")
 public class Card extends AbstractAuditable<User, Long> {
@@ -16,12 +14,12 @@ public class Card extends AbstractAuditable<User, Long> {
     private String content;
 
     @Column(name = "TYPE")
-    private CardType type;
+    private String type;
 
     @Column(name = "IS_PRIVATE")
     private Boolean isPrivate;
 
-    @Column(name = "order")
+    @Column(name = "ORDER_INDEX")
     private Integer order;
 
     public String getContent() {
@@ -32,11 +30,11 @@ public class Card extends AbstractAuditable<User, Long> {
         this.content = content;
     }
 
-    public CardType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(CardType type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -54,26 +52,5 @@ public class Card extends AbstractAuditable<User, Long> {
 
     public void setOrder(Integer order) {
         this.order = order;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Card)) {
-            return false;
-        }
-        if (!super.equals(o)) {
-            return false;
-        }
-        Card card = (Card)o;
-        return Objects.equals(getContent(), card.getContent()) && Objects.equals(getType(), card.getType()) && Objects.equals(getOrder(), card.getOrder());
-    }
-
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(super.hashCode(), getContent(), getType(), getOrder());
     }
 }
