@@ -15,12 +15,8 @@ public class CardService {
     private CardRepository cardRepository;
 
     public void upsertPublicWellCards(ArrayList<Card> newCards) {
-        List<Card> oldCards = cardRepository.findAllByType(CardType.WELL);
-        compareCards(oldCards, newCards);
-    }
-
-    private void compareCards(List<Card> oldCards, ArrayList<Card> newCards) {
-
+        cardRepository.removeCardsByType(CardType.WELL);
+        cardRepository.saveAll(newCards);
     }
 
     public List<Card> findCards() {

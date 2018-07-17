@@ -1,9 +1,11 @@
 package com.retro.core.retro.repository;
 
 import com.retro.core.retro.model.Card;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,6 +15,8 @@ import java.util.List;
 @Repository
 public interface CardRepository extends CrudRepository<Card, Long> {
 
+    @Transactional
+    @Modifying
     @Query(value = "DELETE FROM Card c where c.type = ?1")
     void removeCardsByType(String type);
 
