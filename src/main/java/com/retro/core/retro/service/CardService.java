@@ -5,7 +5,6 @@ import com.retro.core.retro.model.Card;
 import com.retro.core.retro.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,5 +20,14 @@ public class CardService {
 
     public List<Card> findCards() {
         return null;
+    }
+
+    public List<Card> findAll() {
+        Iterable<Card> all = cardRepository.findAll();
+        List<Card> cards = new ArrayList<>();
+        for (Card card: all){
+            cards.add(card);
+        }
+        return cards;
     }
 }

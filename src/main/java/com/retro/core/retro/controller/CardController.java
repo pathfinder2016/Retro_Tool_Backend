@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @CrossOrigin
@@ -24,6 +26,12 @@ public class CardController {
     @RequestMapping(value = "/public/well", method = POST)
     public ResponseEntity upsertPublicWellCards(@RequestBody ArrayList<Card> cards){
         cardService.upsertPublicWellCards(cards);
+        return new ResponseEntity(cards, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/all", method = GET)
+    public ResponseEntity findAll(){
+        List<Card> cards = cardService.findAll();
         return new ResponseEntity(cards, HttpStatus.OK);
     }
 }
