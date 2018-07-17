@@ -1,6 +1,8 @@
 package com.retro.core.retro.controller;
 
 import com.retro.core.retro.model.Card;
+import com.retro.core.retro.service.CardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,8 +19,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping("/card")
 public class CardController {
 
+    @Autowired CardService cardService;
+
     @RequestMapping(value = "/public/well", method = POST)
     public ResponseEntity upsertPublicWellCards(@RequestBody ArrayList<Card> cards){
-        return new ResponseEntity("Test", HttpStatus.OK);
+        cardService.upsertPublicWellCards(cards);
+        return new ResponseEntity(cards, HttpStatus.OK);
     }
 }

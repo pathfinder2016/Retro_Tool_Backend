@@ -7,8 +7,10 @@ import org.springframework.data.jpa.domain.AbstractAuditable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Objects;
 
-@Entity @Table(name = "CARD") public class Card extends AbstractAuditable<User, Long> {
+@Entity @Table(name = "CARD")
+public class Card extends AbstractAuditable<User, Long> {
 
     @Column(name = "CONTENT")
     private String content;
@@ -52,5 +54,26 @@ import javax.persistence.Table;
 
     public void setOrder(Integer order) {
         this.order = order;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Card)) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
+        Card card = (Card)o;
+        return Objects.equals(getContent(), card.getContent()) && Objects.equals(getType(), card.getType()) && Objects.equals(getOrder(), card.getOrder());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(super.hashCode(), getContent(), getType(), getOrder());
     }
 }
