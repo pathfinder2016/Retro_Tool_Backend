@@ -54,6 +54,12 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+        <!--Introduce websocket-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
         <!--https://docs.spring.io/spring-boot/docs/2.0.3.RELEASE/reference/htmlsingle/#boot-features-jpa-and-spring-data-->
         <!--Spring and JPA for database access-->
         <dependency>
@@ -70,6 +76,13 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
+        </dependency>
+
         <!--Hot Swapping: Restart, not reload.-->
         <!--Developer tools are automatically disabled when running a fully packaged application.-->
         <!--Applies sensible development-time configuration.-->
