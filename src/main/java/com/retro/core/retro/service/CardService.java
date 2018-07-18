@@ -5,6 +5,7 @@ import com.retro.core.retro.model.Card;
 import com.retro.core.retro.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,10 +17,6 @@ public class CardService {
     public void upsertPublicWellCards(ArrayList<Card> newCards) {
         cardRepository.removeCardsByType(CardType.WELL);
         cardRepository.saveAll(newCards);
-    }
-
-    public List<Card> findCards() {
-        return null;
     }
 
     public List<Card> findAll() {

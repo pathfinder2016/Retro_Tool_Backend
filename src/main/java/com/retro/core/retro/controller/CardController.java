@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.websocket.EncodeException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,9 @@ public class CardController {
     @Autowired CardService cardService;
 
     @RequestMapping(value = "/public/well", method = POST, consumes = "application/json")
-    public ResponseEntity upsertPublicWellCards(@RequestBody ArrayList<Card> cards) throws IOException {
+    public ResponseEntity upsertPublicWellCards(@RequestBody ArrayList<Card> cards) throws IOException, EncodeException {
         cardService.upsertPublicWellCards(cards);
-
-        WebSocketServer.sendInfo("有新客户呼入,sltAccountId:");
-
-
+        WebSocketServer.sendInfo(cards);
         return new ResponseEntity(cards, HttpStatus.OK);
     }
 

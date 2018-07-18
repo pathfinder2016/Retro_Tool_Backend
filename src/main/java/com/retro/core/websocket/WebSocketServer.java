@@ -1,19 +1,28 @@
 package com.retro.core.websocket;
 
+import com.alibaba.fastjson.JSON;
+import com.retro.core.retro.model.Card;
+import com.retro.core.retro.service.CardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 /**
  * https://my.oschina.net/hibony/blog/1623339
  * https://blog.csdn.net/zhangdehua678/article/details/78913839
  */
-@ServerEndpoint(value = "/websocket")
+@ServerEndpoint(value = "/websocket", configurator = EndpointConfig.class)
 @Component
 public class WebSocketServer {
+
+    // https://blog.csdn.net/tornadojava/article/details/78781474
+    @Autowired
+    private CardService cardService;
 
     //静态变量，用来记录当前在线连接数。应该把它设计成线程安全的。
     private static int onlineCount = 0;
@@ -25,14 +34,14 @@ public class WebSocketServer {
      * 连接建立成功调用的方法
      */
     @OnOpen
-    public void onOpen(Session session) {
+    public void onOpen(Session session) throws EncodeException {
         System.out.println("连接成功");
         this.session = session;
         webSocketSet.add(this);     //加入set中
         addOnlineCount();           //在线数加1
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
         try {
-            sendMessage("Hello, Mike, This is websocket server");
+            sendMessage(cardService.findAll());
             System.out.println("发送连接成功");
         } catch (IOException e) {
             System.out.println("IO异常");
@@ -65,10 +74,10 @@ public class WebSocketServer {
     /**
      * 群发自定义消息
      * */
-    public static void sendInfo(String message) throws IOException {
+    public static void sendInfo(List<Card> cards) throws IOException, EncodeException {
         for (WebSocketServer item : webSocketSet) {
             try {
-                item.sendMessage(message);
+                item.sendMessage(cards);
             } catch (IOException e) {
                 continue;
             }
@@ -84,8 +93,8 @@ public class WebSocketServer {
         error.printStackTrace();
     }
 
-    public void sendMessage(String message) throws IOException {
-        this.session.getBasicRemote().sendText(message);
+    public void sendMessage(List<Card> message) throws IOException, EncodeException {
+        this.session.getBasicRemote().sendText(JSON.toJSON(message).toString());
         //this.session.getAsyncRemote().sendText(message);
     }
 
