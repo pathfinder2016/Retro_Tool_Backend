@@ -30,22 +30,20 @@ public class WebSocketServer {
     private static CopyOnWriteArraySet<WebSocketServer> webSocketSet = new CopyOnWriteArraySet<>();
     //与某个客户端的连接会话，需要通过它来给客户端发送数据
     private Session session;
+    private static CopyOnWriteArraySet<Session> sessionSet = new CopyOnWriteArraySet<>();
     /**
      * 连接建立成功调用的方法
      */
     @OnOpen
     public void onOpen(Session session) throws EncodeException {
         System.out.println("连接成功");
+        sessionSet.add(session);
         this.session = session;
         webSocketSet.add(this);     //加入set中
         addOnlineCount();           //在线数加1
         System.out.println("有新连接加入！当前在线人数为" + getOnlineCount());
-        try {
-            sendMessage(cardService.findAll());
-            System.out.println("发送连接成功");
-        } catch (IOException e) {
-            System.out.println("IO异常");
-        }
+        sendMessage(cardService.findAll());
+        System.out.println("发送连接成功");
     }
 
     /**
@@ -55,6 +53,7 @@ public class WebSocketServer {
     public void onClose() {
         System.out.println("有一连接关闭");
         webSocketSet.remove(this);  //从set中删除
+//        sessionSet(this.se)
         subOnlineCount();           //在线数减1
         System.out.println("有一连接关闭！当前在线人数为" + getOnlineCount());
     }
@@ -76,11 +75,7 @@ public class WebSocketServer {
      * */
     public static void sendInfo(List<Card> cards) throws IOException, EncodeException {
         for (WebSocketServer item : webSocketSet) {
-            try {
-                item.sendMessage(cards);
-            } catch (IOException e) {
-                continue;
-            }
+            item.sendMessage(cards);
         }
     }
 
@@ -90,11 +85,19 @@ public class WebSocketServer {
     @OnError
     public void onError(Session session, Throwable error) {
         System.out.println("发生错误");
+        sessionSet.remove(session);
         error.printStackTrace();
     }
 
-    public void sendMessage(List<Card> message) throws IOException, EncodeException {
-        this.session.getBasicRemote().sendText(JSON.toJSON(message).toString());
+    public void sendMessage(List<Card> message){
+        for(Session session: sessionSet){
+            try {
+                session.getBasicRemote().sendText(JSON.toJSON(message).toString());
+            } catch (IOException e) {
+                System.out.println("Error");
+                e.printStackTrace();
+            }
+        }
         //this.session.getAsyncRemote().sendText(message);
     }
 
