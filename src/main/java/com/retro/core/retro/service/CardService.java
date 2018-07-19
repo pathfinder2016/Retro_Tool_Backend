@@ -14,8 +14,18 @@ public class CardService {
     @Autowired
     private CardRepository cardRepository;
 
-    public void upsertPublicWellCards(ArrayList<Card> newCards) {
-        cardRepository.removeCardsByType(CardType.WELL);
+    public void upsertPublicCards(ArrayList<Card> newCards, String cardType) {
+        switch (cardType) {
+            case CardType.WELL:
+                cardRepository.removeCardsByType(CardType.WELL);
+                break;
+            case CardType.NOT_WELL:
+                cardRepository.removeCardsByType(CardType.NOT_WELL);
+                break;
+            default:
+                cardRepository.removeCardsByType(CardType.SUGGESTION);
+                break;
+        }
         cardRepository.saveAll(newCards);
     }
 

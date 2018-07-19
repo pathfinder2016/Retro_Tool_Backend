@@ -1,5 +1,6 @@
 package com.retro.core.retro.controller;
 
+import com.retro.common.constant.CardType;
 import com.retro.core.retro.model.Card;
 import com.retro.core.retro.service.CardService;
 import com.retro.core.websocket.WebSocketServer;
@@ -27,7 +28,21 @@ public class CardController {
 
     @RequestMapping(value = "/public/well", method = POST, consumes = "application/json")
     public ResponseEntity upsertPublicWellCards(@RequestBody ArrayList<Card> cards) throws IOException, EncodeException {
-        cardService.upsertPublicWellCards(cards);
+        cardService.upsertPublicCards(cards, CardType.WELL);
+        WebSocketServer.sendInfo(cards);
+        return new ResponseEntity(cards, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/public/notwell", method = POST, consumes = "application/json")
+    public ResponseEntity upsertPublicNotWellCards(@RequestBody ArrayList<Card> cards) throws IOException, EncodeException {
+        cardService.upsertPublicCards(cards, CardType.NOT_WELL);
+        WebSocketServer.sendInfo(cards);
+        return new ResponseEntity(cards, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/public/suggestion", method = POST, consumes = "application/json")
+    public ResponseEntity upsertPublicSuggestionCards(@RequestBody ArrayList<Card> cards) throws IOException, EncodeException {
+        cardService.upsertPublicCards(cards, CardType.SUGGESTION);
         WebSocketServer.sendInfo(cards);
         return new ResponseEntity(cards, HttpStatus.OK);
     }
