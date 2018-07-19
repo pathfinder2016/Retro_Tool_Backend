@@ -16,8 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @CrossOrigin
 @RestController
@@ -37,5 +36,12 @@ public class CardController {
     public ResponseEntity findAll(){
         List<Card> cards = cardService.findAll();
         return new ResponseEntity(cards, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/del", method = POST, consumes = "application/json")
+    public ResponseEntity del(@RequestBody Card card) throws IOException, EncodeException {
+        cardService.del(card);
+        WebSocketServer.sendInfo(cardService.findAll());
+        return new ResponseEntity(card, HttpStatus.OK);
     }
 }

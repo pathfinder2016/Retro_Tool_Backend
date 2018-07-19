@@ -27,4 +27,8 @@ public class CardService {
         }
         return cards;
     }
+
+    public void del(Card card) {
+        cardRepository.deleteById(card.getId());
+    }
 }
