@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ActionRepository extends JpaRepository<Action, String> {
-
+    Action findByRetroKey(String retroKey);
 }
