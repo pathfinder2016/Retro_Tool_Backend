@@ -14,7 +14,7 @@ public class CardService {
     @Autowired
     private CardRepository cardRepository;
 
-    public void upsertPublicCards(ArrayList<Card> newCards, String cardType) {
+    public synchronized void upsertPublicCards(ArrayList<Card> newCards, String cardType) {
         switch (cardType) {
             case CardType.WELL:
                 cardRepository.removeCardsByType(CardType.WELL);
@@ -38,7 +38,7 @@ public class CardService {
         return cards;
     }
 
-    public void del(Card card) {
+    public synchronized void del(Card card) {
         cardRepository.deleteById(card.getId());
     }
 }
