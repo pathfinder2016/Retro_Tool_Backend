@@ -1,6 +1,5 @@
 package com.retro.core.retro.controller;
 
-import com.retro.common.constant.CardType;
 import com.retro.core.retro.model.Card;
 import com.retro.core.retro.service.CardService;
 import com.retro.core.websocket.WebSocketServer;
@@ -17,7 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @CrossOrigin
 @RestController
@@ -26,21 +26,9 @@ public class CardController {
 
     @Autowired CardService cardService;
 
-    @RequestMapping(value = "/public/well", method = POST, consumes = "application/json")
+    @RequestMapping(value = "/public", method = POST, consumes = "application/json")
     public void upsertPublicWellCards(@RequestBody ArrayList<Card> cards) throws IOException, EncodeException {
-        cardService.upsertPublicCards(cards, CardType.WELL);
-        WebSocketServer.sendInfo(cardService.findAll());
-    }
-
-    @RequestMapping(value = "/public/notwell", method = POST, consumes = "application/json")
-    public void upsertPublicNotWellCards(@RequestBody ArrayList<Card> cards) throws IOException, EncodeException {
-        cardService.upsertPublicCards(cards, CardType.NOT_WELL);
-        WebSocketServer.sendInfo(cardService.findAll());
-    }
-
-    @RequestMapping(value = "/public/suggestion", method = POST, consumes = "application/json")
-    public void upsertPublicSuggestionCards(@RequestBody ArrayList<Card> cards) throws IOException, EncodeException {
-        cardService.upsertPublicCards(cards, CardType.SUGGESTION);
+        cardService.upsertPublicCards(cards);
         WebSocketServer.sendInfo(cardService.findAll());
     }
 

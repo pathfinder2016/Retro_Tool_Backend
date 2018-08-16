@@ -1,6 +1,5 @@
 package com.retro.core.retro.service;
 
-import com.retro.common.constant.CardType;
 import com.retro.core.retro.model.Card;
 import com.retro.core.retro.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +13,7 @@ public class CardService {
     @Autowired
     private CardRepository cardRepository;
 
-    public synchronized void upsertPublicCards(ArrayList<Card> newCards, String cardType) {
-        switch (cardType) {
-            case CardType.WELL:
-                cardRepository.removeCardsByType(CardType.WELL);
-                break;
-            case CardType.NOT_WELL:
-                cardRepository.removeCardsByType(CardType.NOT_WELL);
-                break;
-            default:
-                cardRepository.removeCardsByType(CardType.SUGGESTION);
-                break;
-        }
+    public synchronized void upsertPublicCards(ArrayList<Card> newCards) {
         cardRepository.saveAll(newCards);
     }
 
