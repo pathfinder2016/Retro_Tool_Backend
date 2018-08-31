@@ -7,9 +7,6 @@ import org.springframework.context.ApplicationContextAware;
 
 import javax.websocket.server.ServerEndpointConfig;
 
-/**
- * https://blog.csdn.net/tornadojava/article/details/78781474
- */
 public class EndpointConfig extends ServerEndpointConfig.Configurator implements ApplicationContextAware
 {
     private static volatile BeanFactory context;
@@ -23,7 +20,7 @@ public class EndpointConfig extends ServerEndpointConfig.Configurator implements
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException
     {
-        System.out.println("auto load"+this.hashCode());
+        System.out.println("auto load "+this.hashCode());
         EndpointConfig.context = applicationContext;
     }
 }
